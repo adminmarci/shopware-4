@@ -194,9 +194,7 @@ abstract class Enlight_Bootstrap extends Enlight_Class implements Enlight_Hook
     protected function initZend()
     {
         $this->Application()->Loader()->registerNamespace('Zend', 'Zend/');
-        //$this->Application()->Loader()->addIncludePath(
-        //        $this->Application()->Path(), Enlight_Loader::POSITION_PREPEND
-        //);
+
         return true;
     }
 

@@ -44,6 +44,10 @@ use Shopware\Components\Model\ModelEntity,
  */
 class Template extends ModelEntity
 {
+    const LEGACY_TEMPLATE = 1;
+    const ESI_TEMPLATE = 2;
+    const TWIG_TEMPLATE = 3;
+
     /**
      * @var integer $id
      *
@@ -121,7 +125,7 @@ class Template extends ModelEntity
      * @var string $version
      * @ORM\Column(name="version", type="integer")
      */
-    private $version = 1;
+    private $version = self::LEGACY_TEMPLATE;
 
     /**
      * @var integer $pluginId
@@ -135,6 +139,24 @@ class Template extends ModelEntity
      * @ORM\JoinColumn(name="plugin_id", referencedColumnName="id")
      */
     private $plugin;
+
+    /**
+     * @return boolean
+     */
+    public function isTwigTemplate()
+    {
+        return $this->getVersion() === self::TWIG_TEMPLATE;
+    }
+
+    public function isLegacyTemplate()
+    {
+        return $this->getVersion() === self::LEGACY_TEMPLATE;
+    }
+
+    public function isEsiTemplate()
+    {
+        return $this->getVersion() === self::ESI_TEMPLATE;
+    }
 
     /**
      * Get id

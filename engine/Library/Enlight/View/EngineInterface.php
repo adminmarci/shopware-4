@@ -74,7 +74,7 @@ interface Enlight_View_EngineInterface extends Enlight_View_Cache
      * @param   Enlight_Template_Default $template
      * @return  Enlight_View_Default
      */
-    public function setTemplate(Enlight_Template_Default $template = null);
+    public function setTemplate($template = null);
 
     /**
      * Checks if a template is stored.

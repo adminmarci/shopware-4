@@ -186,10 +186,15 @@ class Enlight_Controller_Plugins_ViewRenderer_Bootstrap extends Enlight_Plugin_B
      */
     protected function initView()
     {
-        $view = new Enlight_View_Default($this->engine);
+        $shop = $this->Application()->Bootstrap()->getResource('Shop');
 
-        $view->addEngine($this->Application()->Twig());
-
+        if ($shop->getTemplate()->isTwigTemplate()) {
+            $engine = $this->Application()->Twig();
+            $engine->setTemplateDir($this->engine->template_dir);
+            $view = new Enlight_View_Default($engine);
+        } else {
+            $view = new Enlight_View_Default(new Enlight_View_Smarty($this->engine));
+        }
         $this->Action()->setView($view);
     }
 
@@ -323,7 +328,12 @@ class Enlight_Controller_Plugins_ViewRenderer_Bootstrap extends Enlight_Plugin_B
             $part = strtolower($part);
         }
 
-        $templateName = implode(DIRECTORY_SEPARATOR, $parts) . '.tpl';
+        $extension = '.tpl';
+        if ($this->Action()->View()->Engine() instanceof Twig_Environment) {
+            $extension = '.html.twig';
+        }
+
+        $templateName = implode(DIRECTORY_SEPARATOR, $parts) . $extension;
 
         return $templateName;
     }

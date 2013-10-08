@@ -168,7 +168,7 @@ class Enlight_Template_Twig
         return $this;
     }
 
-    public function getTemplateVars() {
+    public function getTemplateVars($spec) {
         return array();
     }
 
@@ -180,4 +180,9 @@ class Enlight_Template_Twig
     public function hasTemplate() {
         return true;
     }
+
+    public function getAssign() {
+        return $this->assignments;
+    }
+
 }

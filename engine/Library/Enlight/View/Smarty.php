@@ -156,7 +156,7 @@ class Enlight_View_Smarty extends Enlight_View implements Enlight_View_Cache
     public function loadTemplate($template_name)
     {
         $this->template = $this->engine->createTemplate($template_name, null, null, $this->engine, false);
-        return $this;
+        return $this->template;
     }
 
     /**

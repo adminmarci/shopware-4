@@ -695,12 +695,20 @@ class Shop extends ModelEntity
         }
 
         if($this->getTemplate() !== null) {
+
             /** @var $template \Enlight_Template_Manager */
             $templateManager = $bootstrap->getResource('Template');
+
             $template = $this->getTemplate();
             $localeName = $this->getLocale()->toString();
 
-            if($template->getVersion() == 2) {
+            if ($template->isTwigTemplate()) {
+                $templateManager->addTemplateDir(array(
+                    'custom' => $template->toString(),
+                    'local' => '_responsive_local',
+                    'base' => '_responsive'
+                ));
+            } else if($template->isEsiTemplate()) {
                 $templateManager->addTemplateDir(array(
                     'custom' => $template->toString(),
                     'local' => '_emotion_local',

@@ -68,13 +68,11 @@ class Enlight_View_Twig implements Enlight_View_EngineInterface
      */
     protected $scope;
 
-    protected $engines = array();
-
     /**
-     * The Enlight_View_Default constructor expects an instance of the Enlight_Template_Manager and set it
+     * The Enlight_View_Default constructor expects an instance of the Twig_Environment and set it
      * into the internal property.
      *
-     * @param   Enlight_Template_Manager $engine
+     * @param   Twig_Environment $engine
      */
     public function __construct(Twig_Environment $engine)
     {
@@ -83,7 +81,7 @@ class Enlight_View_Twig implements Enlight_View_EngineInterface
     }
 
     /**
-     * Returns the instance of the Enlight_Template_Manager which has been set in the class constructor.
+     * Returns the instance of the Twig_Environment which has been set in the class constructor.
      * @return  Twig_Environment
      */
     public function Engine()
@@ -113,7 +111,10 @@ class Enlight_View_Twig implements Enlight_View_EngineInterface
      */
     public function setTemplateDir($path)
     {
-        $this->engine->setTemplateDir($path);
+        $path = (array) $path;
+        foreach($path as $templatePath) {
+            $this->engine->getLoader()->addPath($templatePath);
+        }
         return $this;
     }
 
@@ -126,18 +127,19 @@ class Enlight_View_Twig implements Enlight_View_EngineInterface
      */
     public function addTemplateDir($templateDir, $key = null)
     {
-        $this->engine->addTemplateDir($templateDir, $key);
+        $this->engine->getLoader()->addPath($templateDir);
         return $this;
     }
 
     /**
      * Sets the current template instance into the internal property.
      *
-     * @param   Enlight_Template_Default $template
+     * @param   Enlight_Template_Twig $template
      * @return  Enlight_View_Default
      */
-    public function setTemplate(Enlight_Template_Default $template = null)
+    public function setTemplate($template = null)
     {
+        //todo@dr: Add Template Interface for type hinting
         $this->template = $template;
         return $this;
     }
@@ -226,7 +228,6 @@ class Enlight_View_Twig implements Enlight_View_EngineInterface
      */
     public function assign($spec, $value = null, $nocache = null, $scope = null)
     {
-
         if ($this->template !== null) {
             $this->template->assign($spec, $value);
         } else {
@@ -260,11 +261,6 @@ class Enlight_View_Twig implements Enlight_View_EngineInterface
     public function getAssign($spec = null)
     {
         return $this->assignments;
-
-        if ($this->template !== null) {
-            return $this->template->getTemplateVars($spec);
-        }
-        return $this->engine->getTemplateVars($spec);
     }
 
     /**
