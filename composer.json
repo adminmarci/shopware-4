@@ -19,5 +19,12 @@
         "ext-gd": "*",
         "twig/twig": "1.*",
         "twig/extensions": "1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*@dev",
+        "phpunit/dbunit": "1.2.*@dev"
+    },
+    "config": {
+        "bin-dir": "bin/"
     }
 }
