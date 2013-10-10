@@ -7,6 +7,10 @@
     <parameters>
         <parameter key="shopware.snippet_manager.class">Shopware_Components_Snippet_Manager</parameter>
         <parameter key="shopware.subscriber.class">Shopware_Components_Subscriber</parameter>
+        <parameter key="shopware.event_manager.class">Enlight_Event_EventManager</parameter>
+        <parameter key="shopware.hook_manager.class">Enlight_Hook_HookManager</parameter>
+        <parameter key="shopware.plugin_manager.class">Enlight_Plugin_PluginManager</parameter>
+
     </parameters>
 
     <services>
@@ -32,6 +36,25 @@
             <argument>%shopware.cache.backend%</argument>
             <argument>%shopware.cache.frontendOptions%</argument>
             <argument>%shopware.cache.backendOptions%</argument>
+        </service>
+
+
+        <service id="plugins"
+                 class="%shopware.plugin_manager.class%">
+
+
+        </service>
+
+
+        <service id="hooks"
+                 class="%shopware.hook_manager.class%">
+
+        </service>
+
+
+        <service id="events"
+                 class="%shopware.event_manager.class%">
+
         </service>
 
     </services>
